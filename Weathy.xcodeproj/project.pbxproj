@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		22A139FD254054ED00AE5D3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A139FB254054ED00AE5D3F /* LaunchScreen.storyboard */; };
 		22A13A08254054ED00AE5D3F /* WeathyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A13A07254054ED00AE5D3F /* WeathyTests.swift */; };
 		22A13A13254054ED00AE5D3F /* WeathyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A13A12254054ED00AE5D3F /* WeathyUITests.swift */; };
+		22A13A462540603100AE5D3F /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 22A13A452540603100AE5D3F /* .swiftlint.yml */; };
 		D56C808E46588662F899B846 /* Pods_Weathy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B2061C7C99C1464A3FF9D2 /* Pods_Weathy.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		22A13A0E254054ED00AE5D3F /* WeathyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeathyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A13A12254054ED00AE5D3F /* WeathyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeathyUITests.swift; sourceTree = "<group>"; };
 		22A13A14254054ED00AE5D3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22A13A452540603100AE5D3F /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		96E1A6283E0E35393EA62690 /* Pods-Weathy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weathy.debug.xcconfig"; path = "Target Support Files/Pods-Weathy/Pods-Weathy.debug.xcconfig"; sourceTree = "<group>"; };
 		B7B4C869C776D0559614E021 /* Pods-Weathy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weathy.release.xcconfig"; path = "Target Support Files/Pods-Weathy/Pods-Weathy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +82,7 @@
 		22A139E4254054EB00AE5D3F = {
 			isa = PBXGroup;
 			children = (
+				22A13A452540603100AE5D3F /* .swiftlint.yml */,
 				22A139EF254054EB00AE5D3F /* Weathy */,
 				22A13A06254054ED00AE5D3F /* WeathyTests */,
 				22A13A11254054ED00AE5D3F /* WeathyUITests */,
@@ -135,7 +138,6 @@
 				96E1A6283E0E35393EA62690 /* Pods-Weathy.debug.xcconfig */,
 				B7B4C869C776D0559614E021 /* Pods-Weathy.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -155,10 +157,12 @@
 			buildConfigurationList = 22A13A17254054ED00AE5D3F /* Build configuration list for PBXNativeTarget "Weathy" */;
 			buildPhases = (
 				A035AC8EB77209DCA08CB040 /* [CP] Check Pods Manifest.lock */,
+				22A13A3E25405E7C00AE5D3F /* ShellScript */,
 				22A139E9254054EB00AE5D3F /* Sources */,
 				22A139EA254054EB00AE5D3F /* Frameworks */,
 				22A139EB254054EB00AE5D3F /* Resources */,
 				A5264E631DB42C25FFB8DB64 /* [CP] Embed Pods Frameworks */,
+				22A13A3D25405E4D00AE5D3F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -252,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22A13A462540603100AE5D3F /* .swiftlint.yml in Resources */,
 				22A139FD254054ED00AE5D3F /* LaunchScreen.storyboard in Resources */,
 				22A139FA254054ED00AE5D3F /* Assets.xcassets in Resources */,
 			);
@@ -274,6 +279,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		22A13A3D25405E4D00AE5D3F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		22A13A3E25405E7C00AE5D3F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
 		A035AC8EB77209DCA08CB040 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

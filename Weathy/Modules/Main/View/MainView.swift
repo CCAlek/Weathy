@@ -1,10 +1,10 @@
 //
-//  Created by {{ developer.name }} on {{ date }}.
+//  Created by Semen Semenov on 21/10/2020.
 //
 
 import UIKit
 
-class {{ module_info.name }}View: UIView {
+class MainView: UIView {
 
     private enum ViewMetrics {
     }

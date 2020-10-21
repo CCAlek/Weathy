@@ -28,7 +28,7 @@ class {{ module_info.name }}Presenter: {{ module_info.name }}PresentationLogic {
                 viewModel = {{ module_info.name }}.Something.ViewModel(state: .result(result))
             }
         case let .failure(error):
-            viewModel = {{ module_info.name }}.Something.ViewModel(state: .error(message: error.localizedDescription))
+            viewModel = {{ module_info.name }}.Something.ViewModel(state: .error(message: error))
         }
         
         viewController?.displaySomething(viewModel: viewModel)

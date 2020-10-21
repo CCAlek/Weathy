@@ -5,7 +5,7 @@
 protocol {{ module_info.name }}ProviderProtocol {
 
     // Запрос получения ...
-    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>)
+    func fetchItems(completion: @escaping(RequestResult<[{{ module_info.name }}Model]>) -> Void)
 }
 
 /// Отвечает за получение данных модуля {{ module_info.name }}
@@ -20,8 +20,8 @@ struct {{ module_info.name }}Provider: {{ module_info.name }}ProviderProtocol {
     }
 
     // MARK: Запрос получения ...
-    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>) {
-        if let items = dataStore.items, !items.isEmpty {
+    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>) -> Void) {
+        if let items = dataStore.models, !items.isEmpty {
             return completion(.success(items))
         }
         service.fetchItems { result in

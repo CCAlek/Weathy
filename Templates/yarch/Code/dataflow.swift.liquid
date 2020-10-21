@@ -1,0 +1,28 @@
+//
+//  {{ module_info.description }}
+//  Created by {{ developer.name }} on {{ date }}.
+//
+
+enum {{ module_info.name }} {
+
+    // MARK: Use cases ...
+    enum Something {
+        struct Request {
+        }
+
+        struct Response {
+            var result: RequestResult<[{{ module_info.name }}Model]>
+        }
+
+        struct ViewModel {
+            var state: ViewControllerState
+        }
+    }
+
+    enum ViewControllerState {
+        case loading
+        case result([Any/*viewModel*/])
+        case emptyResult
+        case error(message: String)
+    }
+}

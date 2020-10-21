@@ -1,0 +1,17 @@
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//
+
+protocol {{ module_info.name }}ServiceProtocol {
+
+    // Запрос получения ...
+    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>) -> Void)
+}
+
+/// Получает данные для модуля {{ module_info.name }}
+class {{ module_info.name }}Service: {{ module_info.name }}ServiceProtocol {
+
+    // MARK: Запрос получения ...
+    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>) -> Void) {
+    }
+}

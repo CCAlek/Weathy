@@ -25,7 +25,10 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+
 .DS_Store
+*.lock
+*.xcconfig
 
 *.pbxproj
 *.xcuserstate
@@ -52,8 +55,7 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 Pods/
-# Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+*.xcworkspace
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
@@ -102,4 +104,5 @@ iOSInjectionProject/
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.gitignore.io/api/xcode,swift
+# R.swift
+*.generated.swift

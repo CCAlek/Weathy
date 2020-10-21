@@ -1,0 +1,31 @@
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//
+
+protocol {{ module_info.name }}ProviderProtocol {
+
+    // Запрос получения ...
+    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>)
+}
+
+/// Отвечает за получение данных модуля {{ module_info.name }}
+struct {{ module_info.name }}Provider: {{ module_info.name }}ProviderProtocol {
+
+    let dataStore: {{ module_info.name }}DataStore
+    let service: {{ module_info.name }}ServiceProtocol
+
+    init(dataStore: {{ module_info.name }}DataStore = {{ module_info.name }}DataStore(), service: {{ module_info.name }}ServiceProtocol = {{ module_info.name }}Service()) {
+        self.dataStore = dataStore
+        self.service = service
+    }
+
+    // MARK: Запрос получения ...
+    func fetchItems(completion: @escaping (RequestResult<[{{ module_info.name }}Model]>) {
+        if let items = dataStore.items, !items.isEmpty {
+            return completion(.success(items))
+        }
+        service.fetchItems { result in
+            completion(result)
+        }
+    }
+}

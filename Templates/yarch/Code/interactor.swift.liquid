@@ -1,0 +1,30 @@
+//
+//  {{ module_info.description }}
+//  Created by {{ developer.name }} on {{ date }}.
+//
+
+protocol {{ module_info.name }}BusinessLogic {
+
+    // Do something ...
+    func doSomething(request: {{ module_info.name }}.Something.Request)
+}
+
+/// Класс для описания бизнес-логики модуля {{ module_info.name }}
+class {{ module_info.name }}Interactor: {{ module_info.name }}BusinessLogic {
+
+    let presenter: {{ module_info.name }}PresentationLogic
+    let provider: {{ module_info.name }}ProviderProtocol
+
+    init(presenter: {{ module_info.name }}PresentationLogic, provider: {{ module_info.name }}ProviderProtocol = {{ module_info.name }}Provider()) {
+        self.presenter = presenter
+        self.provider = provider
+    }
+    
+    // MARK: Do something
+    func doSomething(request: {{ module_info.name }}.Something.Request) {
+        provider.fetchItems { [weak self] result in
+            guard let strongSelf = self else { return }
+            strongSelf.presenter.presentSomething(response: {{ module_info.name }}.Something.Response(result: result))
+        }
+    }
+}

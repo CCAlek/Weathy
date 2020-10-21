@@ -105,4 +105,4 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # R.swift
-R.generated.swift
+*.generated.swift

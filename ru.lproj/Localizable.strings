@@ -6,7 +6,16 @@
 */
 
 // MARK: Общие
-"common" = "Общие";
+"common.error" = "Ошибка";
+"common.cancel" = "Отмена";
+
+// MARK: Перечисление сетевого ответа
+"common.networking.authentication-error" = "Необходимо авторизоваться";
+"common.networking.bad-request" = "Неверный запрос";
+"common.networking.outdated" = "URL устарел";
+"common.networking.failed" = "Ошибка запроса";
+"common.networking.no-data" = "Пустой ответ";
+"common.networking.unable-to-decode" = "Невозможно расшифровать ответ";
 
 // MARK: Main
 "main.title" = "Карта";

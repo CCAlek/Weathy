@@ -4,5 +4,4 @@
 
 /// Класс для хранения данных модуля Main
 class MainDataStore {
-    var models: [MainModel]?
 }

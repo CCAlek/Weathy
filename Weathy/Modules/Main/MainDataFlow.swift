@@ -4,13 +4,6 @@
 //
 
 enum Main {
-
-    enum ViewControllerState {
-        case loading
-        case result([Any/*viewModel*/])
-        case emptyResult
-        case error(message: String)
-    }
     
     // MARK: Получение местоположения пользователя
     enum GetUserLocation {
@@ -18,26 +11,33 @@ enum Main {
         }
 
         struct Response {
-            var result: MainMapLocationRequestResult
+            let result: MapLocationRequestResult
         }
 
         struct ViewModel {
-            var state: MainMapViewState
+            let state: MapViewState
         }
     }
 
-    enum MainMapLocationRequestResult {
-        case success(MainUserLocationCoordinateModel)
+    enum MapLocationRequestResult {
+        case success(UserLocationCoordinateModel)
         case failure
         case permissionError
         case wait
     }
     
-    enum MainMapViewState {
+    enum MapViewState {
         case start
-        case result(MainUserLocationCoordinateModel)
+        case result(UserLocationCoordinateModel)
         case failure
         case permissionError
         case wait
+    }
+    
+    // MARK: Получение данных о погоде
+    enum FetchWeather {
+        struct Request {
+            let location: UserLocationCoordinateModel
+        }
     }
 }

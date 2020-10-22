@@ -63,11 +63,20 @@ struct WeatherMainModel: Decodable {
     let temperatureMax: Double
     let pressure: Int
     let humidity: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case temperature = "temp"
+        case feelsLike = "feels_like"
+        case temperatureMin = "temp_min"
+        case temperatureMax = "temp_max"
+        case pressure
+        case humidity
+    }
 }
 
 struct WeatherWindModel: Decodable {
-    let speed: Int
-    let deg: Int
+    let speed: Double
+    let deg: Double
 }
 
 struct WeatherCloudsModel: Decodable {
@@ -75,9 +84,9 @@ struct WeatherCloudsModel: Decodable {
 }
 
 struct WeatherSysModel: Decodable {
-    let type: Int
-    let id: Int
-    let country: String
-    let sunrise: Int
-    let sunset: Int
+    let type: Int?
+    let id: Int?
+    let country: String?
+    let sunrise: Int?
+    let sunset: Int?
 }

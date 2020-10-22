@@ -15,6 +15,8 @@
 		229B74BE2541C301004379F4 /* WeatherMapEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74BD2541C301004379F4 /* WeatherMapEndpoints.swift */; };
 		229B74C62541C34A004379F4 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74C52541C34A004379F4 /* BaseURL.swift */; };
 		229B74CF2541C47D004379F4 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74CE2541C47D004379F4 /* WeatherModel.swift */; };
+		229B74DF2541CA6B004379F4 /* UserLocationCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74DE2541CA6B004379F4 /* UserLocationCoordinateModel.swift */; };
+		229B74E72541CB39004379F4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74E62541CB39004379F4 /* Constants.swift */; };
 		22A139F1254054EB00AE5D3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A139F0254054EB00AE5D3F /* AppDelegate.swift */; };
 		22A139F3254054EB00AE5D3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A139F2254054EB00AE5D3F /* SceneDelegate.swift */; };
 		22A139FA254054ED00AE5D3F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A139F9254054ED00AE5D3F /* Images.xcassets */; };
@@ -66,6 +68,8 @@
 		229B74BD2541C301004379F4 /* WeatherMapEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMapEndpoints.swift; sourceTree = "<group>"; };
 		229B74C52541C34A004379F4 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		229B74CE2541C47D004379F4 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		229B74DE2541CA6B004379F4 /* UserLocationCoordinateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationCoordinateModel.swift; sourceTree = "<group>"; };
+		229B74E62541CB39004379F4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		22A139ED254054EB00AE5D3F /* Weathy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weathy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A139F0254054EB00AE5D3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22A139F2254054EB00AE5D3F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				22A13A5C254070C400AE5D3F /* Models */,
 				22A13A652540716200AE5D3F /* ModuleBuilder.swift */,
 				22A13A6A254072F600AE5D3F /* UniqueIdentifiable.swift */,
+				229B74E62541CB39004379F4 /* Constants.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 			children = (
 				229B74CD2541C467004379F4 /* WeatherModels */,
 				22A13A5D254070E500AE5D3F /* RequestResult.swift */,
+				229B74DE2541CA6B004379F4 /* UserLocationCoordinateModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -261,7 +267,7 @@
 				79916B2B485C839E42DFECE9 /* MainInteractor.swift */,
 				9613111E4459249575BBA245 /* MainPresenter.swift */,
 				7A41BFF2B5E063E5226558D3 /* MainDataFlow.swift */,
-				722267C860999AD6C791F008 /* Model */,
+				722267C860999AD6C791F008 /* ViewModel */,
 				B8302EAA8382974A4877D3B6 /* Provider */,
 				5F7D67F2B05F11CB8F909974 /* View */,
 				229B74AE2541ACB4004379F4 /* Map */,
@@ -277,12 +283,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		722267C860999AD6C791F008 /* Model */ = {
+		722267C860999AD6C791F008 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				63799CB28763131D2E66D9ED /* MainModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		A667001168B3D3964A864E0C /* Pods */ = {
@@ -536,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				229B74E72541CB39004379F4 /* Constants.swift in Sources */,
 				22A139F1254054EB00AE5D3F /* AppDelegate.swift in Sources */,
 				22A13A71254073D400AE5D3F /* TabBarController.swift in Sources */,
 				22A139F3254054EB00AE5D3F /* SceneDelegate.swift in Sources */,
@@ -547,6 +554,7 @@
 				229B74BE2541C301004379F4 /* WeatherMapEndpoints.swift in Sources */,
 				229B74B02541ACD9004379F4 /* MainViewMapViewDelegate.swift in Sources */,
 				229B74C62541C34A004379F4 /* BaseURL.swift in Sources */,
+				229B74DF2541CA6B004379F4 /* UserLocationCoordinateModel.swift in Sources */,
 				31F722CFECF9FC196E86DD57 /* MainPresenter.swift in Sources */,
 				229B74A525417EA2004379F4 /* R.generated.swift in Sources */,
 				01CD65EF386DD56F42526B7F /* MainDataFlow.swift in Sources */,

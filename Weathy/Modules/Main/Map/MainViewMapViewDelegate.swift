@@ -8,7 +8,13 @@
 import MapKit
 
 class MainViewMapViewDelegate: NSObject, MKMapViewDelegate {
+    
+    weak var delegate: MainViewControllerDelegate?
+    
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("mapView center: \(mapView.centerCoordinate)")
+        let location = UserLocationCoordinateModel(
+            latitude: mapView.centerCoordinate.latitude,
+            longitude: mapView.centerCoordinate.longitude)
+        delegate?.didChangeLocationCenterMapView(location: location)
     }
 }

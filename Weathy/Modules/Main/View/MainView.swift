@@ -41,7 +41,9 @@ class MainView: UIView {
         return imageView
     }()
 
-    override init(frame: CGRect = CGRect.zero) {
+    init(frame: CGRect = CGRect.zero,
+         delegate: MainViewControllerDelegate) {
+        mainViewMapViewDelegate.delegate = delegate
         super.init(frame: frame)
         setupLayout()
     }
@@ -66,7 +68,7 @@ class MainView: UIView {
         ])
     }
     
-    func displayUserLocation(location: MainUserLocationCoordinateModel) {
+    func displayUserLocation(location: UserLocationCoordinateModel) {
         let location = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
         let coordinateRegion = MKCoordinateRegion(center: location, latitudinalMeters: 1500, longitudinalMeters: 1500)
         let region = self.mapView.regionThatFits(coordinateRegion)

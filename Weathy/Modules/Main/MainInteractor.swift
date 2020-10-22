@@ -9,6 +9,9 @@ protocol MainBusinessLogic {
 
     // Запрос на получение местоположения пользователя
     func getUserLocation(request: Main.GetUserLocation.Request)
+    
+    // Запрос на получение данных о погоде
+    func fetchWeather(request: Main.FetchWeather.Request)
 }
 
 /// Класс для описания бизнес-логики модуля Main
@@ -32,13 +35,13 @@ class MainInteractor: MainBusinessLogic {
         mapLocationService.permissionRequest()
         mapLocationService.start()
         
-        let result: Main.MainMapLocationRequestResult
+        let result: Main.MapLocationRequestResult
         switch mapLocationService.authorizationStatus() {
         case .denied, .restricted:
             result = .permissionError
         case .authorizedAlways, .authorizedWhenInUse:
             guard let location = mapLocationService.getUserLocation() else { return }
-            result = .success(MainUserLocationCoordinateModel(
+            result = .success(UserLocationCoordinateModel(
                                 latitude: location.coordinate.latitude,
                                 longitude: location.coordinate.longitude))
         case .notDetermined:
@@ -49,13 +52,20 @@ class MainInteractor: MainBusinessLogic {
         }
         presenter.presentUserLocation(response: Main.GetUserLocation.Response(result: result))
     }
+    
+    // MARK: Запрос на получение данных о погоде
+    func fetchWeather(request: Main.FetchWeather.Request) {
+        provider.fetchWeather(location: request.location) { result in
+            print("weather result: \(result)")
+        }
+    }
 }
 
 extension MainInteractor: MainMapLocationServiceDelegate {
     func didUpdateLocations(_ locations: [CLLocation]) {
         guard let location = locations.first else { return }
-        let result: Main.MainMapLocationRequestResult
-        result = .success(MainUserLocationCoordinateModel(
+        let result: Main.MapLocationRequestResult
+        result = .success(UserLocationCoordinateModel(
                             latitude: location.coordinate.latitude,
                             longitude: location.coordinate.longitude))
         presenter.presentUserLocation(response: Main.GetUserLocation.Response(result: result))

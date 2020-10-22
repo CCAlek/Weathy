@@ -7,13 +7,6 @@ import UIKit
 
 class MainBuilder: ModuleBuilder {
 
-    var initialState: Main.ViewControllerState?
-
-    func set(initialState: Main.ViewControllerState) -> MainBuilder {
-        self.initialState = initialState
-        return self
-    } 
-
     func build() -> UIViewController {
         let presenter = MainPresenter()
         let interactor = MainInteractor(presenter: presenter)

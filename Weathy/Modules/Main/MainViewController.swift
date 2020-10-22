@@ -11,19 +11,22 @@ protocol MainDisplayLogic: class {
     func displayUserLocation(viewModel: Main.GetUserLocation.ViewModel)
 }
 
+protocol MainViewControllerDelegate: class {
+    
+    // Изменение координат центра карты
+    func didChangeLocationCenterMapView(location: UserLocationCoordinateModel)
+}
+
 class MainViewController: UIViewController {
 
     let interactor: MainBusinessLogic
-    var state: Main.ViewControllerState
-    var mapViewState: Main.MainMapViewState
+    var mapViewState: Main.MapViewState
 
     lazy var customView = self.view as? MainView
     
     init(interactor: MainBusinessLogic,
-         initialState: Main.ViewControllerState = .loading,
-         mapViewState: Main.MainMapViewState = .start) {
+         mapViewState: Main.MapViewState = .start) {
         self.interactor = interactor
-        self.state = initialState
         self.mapViewState = mapViewState
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,9 +37,8 @@ class MainViewController: UIViewController {
 
     // MARK: View lifecycle
     override func loadView() {
-        let view = MainView(frame: UIScreen.main.bounds)
+        let view = MainView(frame: UIScreen.main.bounds, delegate: self)
         self.view = view
-        // make additional setup of view or save references to subviews
     }
 
     override func viewDidLoad() {
@@ -49,6 +51,12 @@ class MainViewController: UIViewController {
         let request = Main.GetUserLocation.Request()
         interactor.getUserLocation(request: request)
     }
+    
+    // MARK: Получение данных о погоде
+    func fetchWeather(location: UserLocationCoordinateModel) {
+        let request = Main.FetchWeather.Request(location: location)
+        interactor.fetchWeather(request: request)
+    }
 }
 
 extension MainViewController: MainDisplayLogic {
@@ -58,7 +66,7 @@ extension MainViewController: MainDisplayLogic {
         display(newMapViewState: viewModel.state)
     }
 
-    func display(newMapViewState: Main.MainMapViewState) {
+    func display(newMapViewState: Main.MapViewState) {
         mapViewState = newMapViewState
         switch mapViewState {
         case .start:
@@ -72,5 +80,11 @@ extension MainViewController: MainDisplayLogic {
         case .wait:
             print("Wait display user location")
         }
+    }
+}
+
+extension MainViewController: MainViewControllerDelegate {
+    func didChangeLocationCenterMapView(location: UserLocationCoordinateModel) {
+        fetchWeather(location: location)
     }
 }

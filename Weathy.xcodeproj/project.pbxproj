@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		01CD65EF386DD56F42526B7F /* MainDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A41BFF2B5E063E5226558D3 /* MainDataFlow.swift */; };
 		229B74A525417EA2004379F4 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74A425417EA2004379F4 /* R.generated.swift */; };
+		229B74AA25419051004379F4 /* MainMapLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74A925419051004379F4 /* MainMapLocationService.swift */; };
+		229B74B02541ACD9004379F4 /* MainViewMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229B74AF2541ACD9004379F4 /* MainViewMapViewDelegate.swift */; };
 		22A139F1254054EB00AE5D3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A139F0254054EB00AE5D3F /* AppDelegate.swift */; };
 		22A139F3254054EB00AE5D3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A139F2254054EB00AE5D3F /* SceneDelegate.swift */; };
 		22A139FA254054ED00AE5D3F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A139F9254054ED00AE5D3F /* Images.xcassets */; };
@@ -54,6 +56,8 @@
 /* Begin PBXFileReference section */
 		13B2061C7C99C1464A3FF9D2 /* Pods_Weathy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weathy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		229B74A425417EA2004379F4 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		229B74A925419051004379F4 /* MainMapLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapLocationService.swift; sourceTree = "<group>"; };
+		229B74AF2541ACD9004379F4 /* MainViewMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewMapViewDelegate.swift; sourceTree = "<group>"; };
 		22A139ED254054EB00AE5D3F /* Weathy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weathy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A139F0254054EB00AE5D3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22A139F2254054EB00AE5D3F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		229B74AE2541ACB4004379F4 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				229B74AF2541ACD9004379F4 /* MainViewMapViewDelegate.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		22A139E4254054EB00AE5D3F = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +220,7 @@
 				722267C860999AD6C791F008 /* Model */,
 				B8302EAA8382974A4877D3B6 /* Provider */,
 				5F7D67F2B05F11CB8F909974 /* View */,
+				229B74AE2541ACB4004379F4 /* Map */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -251,6 +264,7 @@
 				A41DF133F4CF7E152C8A1CE7 /* MainProvider.swift */,
 				B998880BE5CCF70C48C4B1D8 /* MainDataStore.swift */,
 				B8265220D3BE559C9360D87E /* MainService.swift */,
+				229B74A925419051004379F4 /* MainMapLocationService.swift */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -485,9 +499,11 @@
 				2327957AF9BA300761EFF008 /* MainBuilder.swift in Sources */,
 				7DF04809CACE9459DE99F8AE /* MainViewController.swift in Sources */,
 				49EEA5B3305B4F1E1A543BEF /* MainInteractor.swift in Sources */,
+				229B74B02541ACD9004379F4 /* MainViewMapViewDelegate.swift in Sources */,
 				31F722CFECF9FC196E86DD57 /* MainPresenter.swift in Sources */,
 				229B74A525417EA2004379F4 /* R.generated.swift in Sources */,
 				01CD65EF386DD56F42526B7F /* MainDataFlow.swift in Sources */,
+				229B74AA25419051004379F4 /* MainMapLocationService.swift in Sources */,
 				C080CB34F98C9CE9E231DDF7 /* MainModel.swift in Sources */,
 				343596B86F519EFD34F585E7 /* MainProvider.swift in Sources */,
 				2A74C7421964F6B4B569D960 /* MainDataStore.swift in Sources */,

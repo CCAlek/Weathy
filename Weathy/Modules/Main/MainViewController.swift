@@ -7,18 +7,24 @@ import UIKit
 
 protocol MainDisplayLogic: class {
 
-    // Do something
-    func displaySomething(viewModel: Main.Something.ViewModel)
+    // Отображение местоположения пользователя
+    func displayUserLocation(viewModel: Main.GetUserLocation.ViewModel)
 }
 
 class MainViewController: UIViewController {
 
     let interactor: MainBusinessLogic
     var state: Main.ViewControllerState
+    var mapViewState: Main.MainMapViewState
 
-    init(interactor: MainBusinessLogic, initialState: Main.ViewControllerState = .loading) {
+    lazy var customView = self.view as? MainView
+    
+    init(interactor: MainBusinessLogic,
+         initialState: Main.ViewControllerState = .loading,
+         mapViewState: Main.MainMapViewState = .start) {
         self.interactor = interactor
         self.state = initialState
+        self.mapViewState = mapViewState
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -35,34 +41,36 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        display(newMapViewState: mapViewState)
     }
 
-    // MARK: Do something
-    func doSomething() {
-        let request = Main.Something.Request()
-        interactor.doSomething(request: request)
+    // MARK: Получение местоположения пользователя
+    func getUserLocation() {
+        let request = Main.GetUserLocation.Request()
+        interactor.getUserLocation(request: request)
     }
 }
 
 extension MainViewController: MainDisplayLogic {
 
-    // MARK: Do smth
-    func displaySomething(viewModel: Main.Something.ViewModel) {
-        display(newState: viewModel.state)
+    // MARK: Отображение местоположения пользователя
+    func displayUserLocation(viewModel: Main.GetUserLocation.ViewModel) {
+        display(newMapViewState: viewModel.state)
     }
 
-    func display(newState: Main.ViewControllerState) {
-        state = newState
-        switch state {
-        case .loading:
-            print("loading...")
-        case let .error(message):
-            print("error \(message)")
-        case let .result(items):
-            print("result: \(items)")
-        case .emptyResult:
-            print("empty result")
+    func display(newMapViewState: Main.MainMapViewState) {
+        mapViewState = newMapViewState
+        switch mapViewState {
+        case .start:
+            getUserLocation()
+        case let .result(location):
+            customView?.displayUserLocation(location: location)
+        case .failure:
+            print("Error display user location")
+        case .permissionError:
+            print("Permission error get user location")
+        case .wait:
+            print("Wait display user location")
         }
     }
 }

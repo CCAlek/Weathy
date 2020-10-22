@@ -8,3 +8,8 @@ struct MainModel: UniqueIdentifiable {
     let uid: UniqueIdentifier
     let name: String
 }
+
+struct MainUserLocationCoordinateModel {
+    let latitude: Double
+    let longitude: Double
+}

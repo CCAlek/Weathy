@@ -5,24 +5,39 @@
 
 enum Main {
 
-    // MARK: Use cases ...
-    enum Something {
-        struct Request {
-        }
-
-        struct Response {
-            var result: RequestResult<[MainModel]>
-        }
-
-        struct ViewModel {
-            var state: ViewControllerState
-        }
-    }
-
     enum ViewControllerState {
         case loading
         case result([Any/*viewModel*/])
         case emptyResult
         case error(message: String)
+    }
+    
+    // MARK: Получение местоположения пользователя
+    enum GetUserLocation {
+        struct Request {
+        }
+
+        struct Response {
+            var result: MainMapLocationRequestResult
+        }
+
+        struct ViewModel {
+            var state: MainMapViewState
+        }
+    }
+
+    enum MainMapLocationRequestResult {
+        case success(MainUserLocationCoordinateModel)
+        case failure
+        case permissionError
+        case wait
+    }
+    
+    enum MainMapViewState {
+        case start
+        case result(MainUserLocationCoordinateModel)
+        case failure
+        case permissionError
+        case wait
     }
 }

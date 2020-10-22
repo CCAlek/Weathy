@@ -7,8 +7,8 @@ import UIKit
 
 protocol MainPresentationLogic {
 
-    // Do something ...
-    func presentSomething(response: Main.Something.Response)
+    // Показ местоположения пользователя
+    func presentUserLocation(response: Main.GetUserLocation.Response)
 }
 
 /// Отвечает за отображение данных модуля Main
@@ -16,21 +16,21 @@ class MainPresenter: MainPresentationLogic {
 
     weak var viewController: MainDisplayLogic?
 
-    // MARK: Do something ...
-    func presentSomething(response: Main.Something.Response) {
-        var viewModel: Main.Something.ViewModel
+    // MARK: Показ местоположения пользователя
+    func presentUserLocation(response: Main.GetUserLocation.Response) {
+        var viewModel: Main.GetUserLocation.ViewModel
         
         switch response.result {
+        case .failure:
+            viewModel = Main.GetUserLocation.ViewModel(state: .failure)
         case let .success(result):
-            if result.isEmpty {
-                viewModel = Main.Something.ViewModel(state: .emptyResult)
-            } else {
-                viewModel = Main.Something.ViewModel(state: .result(result))
-            }
-        case let .failure(error):
-            viewModel = Main.Something.ViewModel(state: .error(message: error))
+            viewModel = Main.GetUserLocation.ViewModel(state: .result(result))
+        case .permissionError:
+            viewModel = Main.GetUserLocation.ViewModel(state: .permissionError)
+        case .wait:
+            viewModel = Main.GetUserLocation.ViewModel(state: .wait)
         }
         
-        viewController?.displaySomething(viewModel: viewModel)
+        viewController?.displayUserLocation(viewModel: viewModel)
     }
 }

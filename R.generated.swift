@@ -191,10 +191,12 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 3 images.
+  /// This `R.image` struct is generated, and contains static references to 4 images.
   struct image {
     /// Image `launchScreen`.
     static let launchScreen = Rswift.ImageResource(bundle: R.hostingBundle, name: "launchScreen")
+    /// Image `mainCenterArrow`.
+    static let mainCenterArrow = Rswift.ImageResource(bundle: R.hostingBundle, name: "mainCenterArrow")
     /// Image `tabMain`.
     static let tabMain = Rswift.ImageResource(bundle: R.hostingBundle, name: "tabMain")
     /// Image `tabPlaces`.
@@ -204,6 +206,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "launchScreen", bundle: ..., traitCollection: ...)`
     static func launchScreen(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.launchScreen, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "mainCenterArrow", bundle: ..., traitCollection: ...)`
+    static func mainCenterArrow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.mainCenterArrow, compatibleWith: traitCollection)
     }
     #endif
 

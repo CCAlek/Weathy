@@ -53,6 +53,11 @@ class MainInteractor: MainBusinessLogic {
 
 extension MainInteractor: MainMapLocationServiceDelegate {
     func didUpdateLocations(_ locations: [CLLocation]) {
-        print("\(#function), locations: \(locations)")
+        guard let location = locations.first else { return }
+        let result: Main.MainMapLocationRequestResult
+        result = .success(MainUserLocationCoordinateModel(
+                            latitude: location.coordinate.latitude,
+                            longitude: location.coordinate.longitude))
+        presenter.presentUserLocation(response: Main.GetUserLocation.Response(result: result))
     }
 }

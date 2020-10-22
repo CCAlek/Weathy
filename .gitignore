@@ -26,6 +26,9 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
+# R.swift
+*.generated.swift
+
 .DS_Store
 *.lock
 *.xcconfig
@@ -103,6 +106,3 @@ iOSInjectionProject/
 
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
-
-# R.swift
-*.generated.swift

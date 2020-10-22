@@ -9,6 +9,8 @@ class MainView: UIView {
 
     private enum ViewMetrics {
         static let backgroundColor = R.color.clearWhite()
+        
+        static let arrowImageViewSize: CGSize = CGSize(width: 48, height: 48)
     }
 
     private var mainViewMapViewDelegate: MainViewMapViewDelegate = MainViewMapViewDelegate()
@@ -30,6 +32,14 @@ class MainView: UIView {
         mapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         return mapView
     }()
+    
+    private lazy var arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = R.image.mainCenterArrow()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
 
     override init(frame: CGRect = CGRect.zero) {
         super.init(frame: frame)
@@ -44,8 +54,16 @@ class MainView: UIView {
         backgroundColor = ViewMetrics.backgroundColor
         
         addSubview(mapView)
+        addSubview(arrowImageView)
         
         mapView.frame = frame
+        
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -ViewMetrics.arrowImageViewSize.height / 2),
+            arrowImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            arrowImageView.heightAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.height),
+            arrowImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.width)
+        ])
     }
     
     func displayUserLocation(location: MainUserLocationCoordinateModel) {

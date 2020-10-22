@@ -191,15 +191,33 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 1 images.
+  /// This `R.image` struct is generated, and contains static references to 3 images.
   struct image {
     /// Image `launchScreen`.
     static let launchScreen = Rswift.ImageResource(bundle: R.hostingBundle, name: "launchScreen")
+    /// Image `tabMain`.
+    static let tabMain = Rswift.ImageResource(bundle: R.hostingBundle, name: "tabMain")
+    /// Image `tabPlaces`.
+    static let tabPlaces = Rswift.ImageResource(bundle: R.hostingBundle, name: "tabPlaces")
 
     #if os(iOS) || os(tvOS)
     /// `UIImage(named: "launchScreen", bundle: ..., traitCollection: ...)`
     static func launchScreen(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.launchScreen, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "tabMain", bundle: ..., traitCollection: ...)`
+    static func tabMain(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.tabMain, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "tabPlaces", bundle: ..., traitCollection: ...)`
+    static func tabPlaces(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.tabPlaces, compatibleWith: traitCollection)
     }
     #endif
 
@@ -238,12 +256,50 @@ struct R: Rswift.Validatable {
 
   /// This `R.string` struct is generated, and contains static references to 1 localization tables.
   struct string {
-    /// This `R.string.localizable` struct is generated, and contains static references to 1 localization keys.
+    /// This `R.string.localizable` struct is generated, and contains static references to 3 localization keys.
     struct localizable {
+      /// ru translation: Карта
+      ///
+      /// Locales: ru
+      static let mainTitle = Rswift.StringResource(key: "main.title", tableName: "Localizable", bundle: R.hostingBundle, locales: ["ru"], comment: nil)
+      /// ru translation: Места
+      ///
+      /// Locales: ru
+      static let placesTitle = Rswift.StringResource(key: "places.title", tableName: "Localizable", bundle: R.hostingBundle, locales: ["ru"], comment: nil)
       /// ru translation: Общие
       ///
       /// Locales: ru
       static let common = Rswift.StringResource(key: "common", tableName: "Localizable", bundle: R.hostingBundle, locales: ["ru"], comment: nil)
+
+      /// ru translation: Карта
+      ///
+      /// Locales: ru
+      static func mainTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("main.title", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "main.title"
+        }
+
+        return NSLocalizedString("main.title", bundle: bundle, comment: "")
+      }
+
+      /// ru translation: Места
+      ///
+      /// Locales: ru
+      static func placesTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("places.title", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "places.title"
+        }
+
+        return NSLocalizedString("places.title", bundle: bundle, comment: "")
+      }
 
       /// ru translation: Общие
       ///

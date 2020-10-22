@@ -7,3 +7,9 @@
 
 // MARK: Общие
 "common" = "Общие";
+
+// MARK: Main
+"main.title" = "Карта";
+
+// MARK: Places
+"places.title" = "Места";

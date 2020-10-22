@@ -7,6 +7,7 @@ import UIKit
 class MainView: UIView {
 
     private enum ViewMetrics {
+        static let backgroundColor = R.color.clearWhite()
     }
 
     private lazy var customView: UIView = {
@@ -24,6 +25,6 @@ class MainView: UIView {
     }
 
     func setupLayout() {
-        addSubview(customView)
+        backgroundColor = ViewMetrics.backgroundColor
     }
 }

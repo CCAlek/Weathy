@@ -14,7 +14,7 @@ class APIClient {
         case failure(String)
     }
     
-    private var defaultTask: URLSessionDataTask!
+    private var defaultTask: URLSessionDataTask?
     
     private var defaultSession: URLSession = {
         let config = URLSessionConfiguration.default
@@ -53,11 +53,11 @@ class APIClient {
                 }
             }
         })
-        defaultTask.resume()
+        defaultTask?.resume()
     }
     
     func stop() {
-        defaultTask.cancel()
+        defaultTask?.cancel()
     }
 }
 

@@ -90,3 +90,11 @@ struct WeatherSysModel: Decodable {
     let sunrise: Int?
     let sunset: Int?
 }
+
+// MARK: Меры измерения
+enum WeatherUnits {
+    // Цельсий
+    case metric
+    // Фаренгейт
+    case imperial
+}

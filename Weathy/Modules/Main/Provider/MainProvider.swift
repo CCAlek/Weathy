@@ -22,7 +22,7 @@ struct MainProvider: MainProviderProtocol {
 
     // MARK: Запрос получения данных о погоде
     func fetchWeather(location: UserLocationCoordinateModel, completion: @escaping (RequestResult<WeatherModel>) -> Void) {
-        service.fetchWeather(location: location) { result in
+        service.fetchWeather(units: .metric, location: location) { result in
             completion(result)
         }
     }

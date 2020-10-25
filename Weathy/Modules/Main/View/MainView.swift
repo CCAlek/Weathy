@@ -13,8 +13,11 @@ class MainView: UIView {
         
         static let arrowImageViewSize: CGSize = CGSize(width: 48.0, height: 48.0)
         
-        static let standartMargin: CGFloat = 16
-        static let spacing: CGFloat = 4
+        static let largeButtonContentInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
+        static let buttonContentInset = UIEdgeInsets(top: 4.0, left: 4.0, bottom: 4.0, right: 4.0)
+        
+        static let standartMargin: CGFloat = 16.0
+        static let spacing: CGFloat = 4.0
         
         static let iconImageViewSize: CGSize = CGSize(width: 24.0, height: 24.0)
     }
@@ -49,7 +52,77 @@ class MainView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    // MARK: Buttons
+    private lazy var heartButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = ViewMetrics.backgroundColor
+        button.tintColor = R.color.gray()
+        button.layer.cornerRadius = 16
+        button.layer.shadowColor = R.color.dark()?.withAlphaComponent(0.05).cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 8
+        button.layer.shadowOffset = CGSize(width: 1, height: 4)
+        button.setImage(R.image.mainHeart(), for: .normal)
+        button.contentEdgeInsets = ViewMetrics.largeButtonContentInset
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = ViewMetrics.standartMargin
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var plusButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = ViewMetrics.backgroundColor
+        button.tintColor = R.color.gray()
+        button.layer.cornerRadius = 12
+        button.layer.shadowColor = R.color.dark()?.withAlphaComponent(0.05).cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 8
+        button.layer.shadowOffset = CGSize(width: 1, height: 4)
+        button.setImage(R.image.mainPlus(), for: .normal)
+        button.contentEdgeInsets = ViewMetrics.buttonContentInset
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var minusButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = ViewMetrics.backgroundColor
+        button.tintColor = R.color.gray()
+        button.layer.cornerRadius = 12
+        button.layer.shadowColor = R.color.dark()?.withAlphaComponent(0.05).cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 8
+        button.layer.shadowOffset = CGSize(width: 1, height: 4)
+        button.setImage(R.image.mainMinus(), for: .normal)
+        button.contentEdgeInsets = ViewMetrics.buttonContentInset
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var locationButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = ViewMetrics.backgroundColor
+        button.tintColor = R.color.gray()
+        button.layer.cornerRadius = 16
+        button.layer.shadowColor = R.color.dark()?.withAlphaComponent(0.05).cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 8
+        button.layer.shadowOffset = CGSize(width: 1, height: 4)
+        button.setImage(R.image.mainLocation(), for: .normal)
+        button.contentEdgeInsets = ViewMetrics.largeButtonContentInset
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
+    // MARK: Weather view
     private lazy var weatherView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
@@ -163,7 +236,12 @@ extension MainView {
         
         addSubview(mapView)
         addSubview(arrowImageView)
+        addSubview(heartButton)
+        addSubview(buttonStackView)
+        addSubview(locationButton)
         addSubview(weatherView)
+        buttonStackView.addArrangedSubview(plusButton)
+        buttonStackView.addArrangedSubview(minusButton)
         weatherView.addSubview(titleLabel)
         weatherView.addSubview(temperatureLabel)
         weatherView.addSubview(iconImageView)
@@ -173,10 +251,16 @@ extension MainView {
         mapView.frame = frame
         
         NSLayoutConstraint.activate([
-            arrowImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -ViewMetrics.arrowImageViewSize.height / 2),
-            arrowImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            arrowImageView.centerYAnchor.constraint(equalTo: mapView.centerYAnchor, constant: -ViewMetrics.arrowImageViewSize.height / 2),
+            arrowImageView.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
             arrowImageView.heightAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.height),
-            arrowImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.width)
+            arrowImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.width),
+            
+            heartButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: ViewMetrics.standartMargin),
+            heartButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
+            
+            buttonStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            buttonStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin)
         ])
         
         setupOrientationLayout()
@@ -198,6 +282,9 @@ extension MainView {
     
     private func setupPortraitConstraint() -> [NSLayoutConstraint] {
         let constraints = [
+            locationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
+            locationButton.bottomAnchor.constraint(equalTo: weatherView.topAnchor, constant: -ViewMetrics.standartMargin),
+            
             weatherView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ViewMetrics.standartMargin),
             weatherView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
             weatherView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
@@ -217,6 +304,9 @@ extension MainView {
 
     private func setupLandscapeConstraint() -> [NSLayoutConstraint] {
         let constraints = [
+            locationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
+            locationButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
+            
             weatherView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ViewMetrics.standartMargin),
             weatherView.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -ViewMetrics.standartMargin),
             weatherView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
@@ -228,8 +318,7 @@ extension MainView {
             feelsLikeLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: ViewMetrics.spacing),
             feelsLikeLabel.leadingAnchor.constraint(equalTo: weatherView.leadingAnchor, constant: ViewMetrics.standartMargin),
             feelsLikeLabel.trailingAnchor.constraint(equalTo: weatherView.trailingAnchor, constant: -ViewMetrics.standartMargin),
-            feelsLikeLabel.bottomAnchor.constraint(equalTo: weatherView.bottomAnchor, constant: -ViewMetrics.standartMargin),
-            
+            feelsLikeLabel.bottomAnchor.constraint(equalTo: weatherView.bottomAnchor, constant: -ViewMetrics.standartMargin)
         ]
         return constraints
     }

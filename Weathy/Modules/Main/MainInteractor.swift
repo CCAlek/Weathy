@@ -12,6 +12,9 @@ protocol MainBusinessLogic {
     
     // Запрос на получение данных о погоде
     func fetchWeather(request: Main.FetchWeather.Request)
+    
+    // Получение подробной информации о погоде для перехода на экран погоды
+    func getWeather(request: Main.NavigateToWeather.Request)
 }
 
 /// Класс для описания бизнес-логики модуля Main
@@ -67,6 +70,13 @@ class MainInteractor: MainBusinessLogic {
                 strongSelf.presenter.presentWeather(response: response)
             }
         }
+    }
+    
+    // MARK: Получение подробной информации о погоде для перехода на экран погоды
+    func getWeather(request: Main.NavigateToWeather.Request) {
+        guard let result = provider.getWeather() else { return }
+        let response = Main.NavigateToWeather.Response(result: result)
+        presenter.navigateToWeather(response: response)
     }
 }
 

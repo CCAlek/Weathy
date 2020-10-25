@@ -12,6 +12,9 @@ protocol MainPresentationLogic {
     
     // Показ данных о погоде
     func presentWeather(response: Main.FetchWeather.Response)
+    
+    // Переход к экрану подробной информации о погоде
+    func navigateToWeather(response: Main.NavigateToWeather.Response)
 }
 
 /// Отвечает за отображение данных модуля Main
@@ -51,6 +54,13 @@ class MainPresenter: MainPresentationLogic {
         
         viewController?.displayWeather(viewModel: viewModel)
     }
+    
+    // MARK: Переход к экрану подробной информации о погоде
+    func navigateToWeather(response: Main.NavigateToWeather.Response) {
+        let weatherViewModel = getWeatherScreenViewModel(weather: response.result)
+        let viewModel = Main.NavigateToWeather.ViewModel(result: weatherViewModel)
+        viewController?.displayWeatherScreen(viewModel: viewModel)
+    }
 }
 
 extension MainPresenter {
@@ -82,5 +92,13 @@ extension MainPresenter {
             return String(text.prefix(upTo: index))
         }
         return text
+    }
+    
+    // MARK: Получение модели отображения подробной информации о погоде
+    private func getWeatherScreenViewModel(weather: WeatherModel) -> WeatherViewModel {
+        let viewModel = WeatherViewModel(rows: [
+            .title(getWeatherViewModel(weather: weather))
+        ])
+        return viewModel
     }
 }

@@ -224,7 +224,7 @@ class MainView: UIView {
 // MARK: Actions
 extension MainView {
     @objc private func navigateToWeather() {
-        print(#function)
+        delegate?.navigateToWeather()
     }
     
     @objc private func heartButtonAction() {

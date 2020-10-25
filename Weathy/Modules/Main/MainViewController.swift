@@ -3,6 +3,7 @@
 //  Created by Semen Semenov on 21/10/2020.
 //
 
+import FloatingPanel
 import UIKit
 
 protocol MainDisplayLogic: class {
@@ -12,6 +13,9 @@ protocol MainDisplayLogic: class {
     
     // Отображение данных о погоде
     func displayWeather(viewModel: Main.FetchWeather.ViewModel)
+    
+    // Отображение экрана подробной информации о погоде
+    func displayWeatherScreen(viewModel: Main.NavigateToWeather.ViewModel)
 }
 
 protocol MainViewControllerDelegate: class {
@@ -21,14 +25,21 @@ protocol MainViewControllerDelegate: class {
     
     // Переход к местоположению пользователя
     func navigateToUserLocation()
+    
+    // Переход к экрану подробной информации о погоде
+    func navigateToWeather()
 }
 
 class MainViewController: UIViewController {
 
     let interactor: MainBusinessLogic
     var mapViewState: Main.MapViewState
+    
+    var tableDataSource = WeatherTableDataSource()
+    var floatingPanelDelegate = FixedFloatingPanelDelegate()
 
     lazy var customView = self.view as? MainView
+    var weatherTableView: UITableView?
     
     init(interactor: MainBusinessLogic,
          mapViewState: Main.MapViewState = .start) {
@@ -102,6 +113,46 @@ extension MainViewController: MainDisplayLogic {
             print("Error display weather data: \(error)")
         }
     }
+    
+    // MARK: Отображение экрана подробной информации о погоде
+    func displayWeatherScreen(viewModel: Main.NavigateToWeather.ViewModel) {
+        tableDataSource.representableViewModel = viewModel.result
+        displayPanelView()
+    }
+    
+    func displayPanelView() {
+        if presentedViewController is FloatingPanelController {
+            self.weatherTableView?.reloadData()
+            return
+        }
+        
+        let tableView = getWeatherTableView()
+        self.weatherTableView = tableView
+        floatingPanelDelegate.viewMetrics = FixedFloatingPanelViewMetrics(
+            contentHeight: tableView.contentSize.height,
+            estimatedRowHeight: tableView.estimatedRowHeight,
+            numberOfRows: tableDataSource.representableViewModel.rows.count,
+            viewHeight: view.frame.height,
+            safeAreaTopInset: view.safeAreaInsets.top)
+        
+        let floatingPanelController = FloatingPanelController()
+        floatingPanelController.delegate = floatingPanelDelegate
+        let floatingPanelWorker = FloatingPanelWorker()
+        floatingPanelWorker.present(tableView, with: self, panel: floatingPanelController)
+    }
+    
+    private func getWeatherTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.backgroundColor = R.color.clearWhite()
+//        tableView.delegate = tableDelegate
+        tableView.dataSource = tableDataSource
+        tableView.separatorStyle = .none
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.estimatedRowHeight = 60
+        tableView.layoutIfNeeded()
+        tableView.tableFooterView = UIView()
+        return tableView
+    }
 }
 
 extension MainViewController: MainViewControllerDelegate {
@@ -113,5 +164,11 @@ extension MainViewController: MainViewControllerDelegate {
     // MARK: Переход к местоположению пользователя
     func navigateToUserLocation() {
         getUserLocation()
+    }
+    
+    // MARK: Переход к экрану подробной информации о погоде
+    func navigateToWeather() {
+        let request = Main.NavigateToWeather.Request()
+        interactor.getWeather(request: request)
     }
 }

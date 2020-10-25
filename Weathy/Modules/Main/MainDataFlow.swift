@@ -53,4 +53,18 @@ enum Main {
         case result(MainViewModel)
         case failure(String)
     }
+    
+    // MARK: Переход к экрану подробной информации о погоде
+    enum NavigateToWeather {
+        struct Request {
+        }
+        
+        struct Response {
+            let result: WeatherModel
+        }
+        
+        struct ViewModel {
+            let result: WeatherViewModel
+        }
+    }
 }

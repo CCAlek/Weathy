@@ -39,5 +39,18 @@ enum Main {
         struct Request {
             let location: UserLocationCoordinateModel
         }
+        
+        struct Response {
+            let result: RequestResult<WeatherModel>
+        }
+        
+        struct ViewModel {
+            let state: WeatherState
+        }
+    }
+    
+    enum WeatherState {
+        case result(MainViewModel)
+        case failure(String)
     }
 }

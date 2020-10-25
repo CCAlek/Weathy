@@ -11,4 +11,7 @@ struct WeatherMapEndpoints {
     // Получение данных о погоде по координатам
     // https://openweathermap.org/current
     static let weather = "\(BaseURL.openWeatherMap)/data/2.5/weather"
+    
+    // Получение иконки погоды
+    static let icon = "https://openweathermap.org/img/wn"
 }

@@ -19,6 +19,9 @@
 
 // MARK: Main
 "main.title" = "Карта";
+"main.title-view-model" = "%@ / Сейчас";
+"main.temperature" = "%@ Cº";
+"main.feelsLike" = "Ощущается как: %@";
 
 // MARK: Places
 "places.title" = "Места";

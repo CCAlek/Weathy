@@ -55,8 +55,17 @@ class MainInteractor: MainBusinessLogic {
     
     // MARK: Запрос на получение данных о погоде
     func fetchWeather(request: Main.FetchWeather.Request) {
-        provider.fetchWeather(location: request.location) { result in
-            print("weather result: \(result)")
+        provider.fetchWeather(location: request.location) { [weak self] result in
+            print("fetch weather result: \(result)")
+            guard let strongSelf = self else { return }
+            switch result {
+            case let .success(result):
+                let response = Main.FetchWeather.Response(result: .success(result))
+                strongSelf.presenter.presentWeather(response: response)
+            case let .failure(error):
+                let response = Main.FetchWeather.Response(result: .failure(error))
+                strongSelf.presenter.presentWeather(response: response)
+            }
         }
     }
 }

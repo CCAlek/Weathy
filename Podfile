@@ -7,6 +7,7 @@ target 'Weathy' do
   pod 'SwiftLint'
   pod 'R.swift'
   pod 'FloatingPanel'
+  pod 'SDWebImage'
 
 end
 

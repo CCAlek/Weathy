@@ -9,6 +9,9 @@ protocol MainDisplayLogic: class {
 
     // Отображение местоположения пользователя
     func displayUserLocation(viewModel: Main.GetUserLocation.ViewModel)
+    
+    // Отображение данных о погоде
+    func displayWeather(viewModel: Main.FetchWeather.ViewModel)
 }
 
 protocol MainViewControllerDelegate: class {
@@ -79,6 +82,16 @@ extension MainViewController: MainDisplayLogic {
             print("Permission error get user location")
         case .wait:
             print("Wait display user location")
+        }
+    }
+    
+    // MARK: Отображение данных о погоде
+    func displayWeather(viewModel: Main.FetchWeather.ViewModel) {
+        switch viewModel.state {
+        case let .result(weather):
+            customView?.configure(with: weather)
+        case let .failure(error):
+            print("Error display weather data: \(error)")
         }
     }
 }

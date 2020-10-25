@@ -9,6 +9,9 @@ protocol MainPresentationLogic {
 
     // Показ местоположения пользователя
     func presentUserLocation(response: Main.GetUserLocation.Response)
+    
+    // Показ данных о погоде
+    func presentWeather(response: Main.FetchWeather.Response)
 }
 
 /// Отвечает за отображение данных модуля Main
@@ -32,5 +35,52 @@ class MainPresenter: MainPresentationLogic {
         }
         
         viewController?.displayUserLocation(viewModel: viewModel)
+    }
+    
+    // MARK: Показ данных о погоде
+    func presentWeather(response: Main.FetchWeather.Response) {
+        var viewModel: Main.FetchWeather.ViewModel
+
+        switch response.result {
+        case let .success(result):
+            let weatherViewModel = getWeatherViewModel(weather: result)
+            viewModel = Main.FetchWeather.ViewModel(state: .result(weatherViewModel))
+        case let .failure(error):
+            viewModel = Main.FetchWeather.ViewModel(state: .failure(error))
+        }
+        
+        viewController?.displayWeather(viewModel: viewModel)
+    }
+}
+
+extension MainPresenter {
+    // MARK: Получение модели отображения данных о погоде
+    private func getWeatherViewModel(weather: WeatherModel) -> MainViewModel {
+        var iconURL: String
+        if let icon = weather.weather.first?.icon {
+            iconURL = "\(WeatherMapEndpoints.icon)/\(icon)@2x.png"
+        } else {
+            iconURL = ""
+        }
+        
+        let title = weather.name.isEmpty ? "-" : weather.name
+        let temperature = removeDecimal(number: weather.main.temperature)
+        let feelsLike = removeDecimal(number: weather.main.feelsLike)
+        
+        let viewModel = MainViewModel(
+            title: R.string.localizable.mainTitleViewModel(title),
+            temperature: R.string.localizable.mainTemperature(temperature),
+            iconURL: iconURL,
+            description: weather.weather.first?.description ?? "",
+            feelsLike: R.string.localizable.mainFeelsLike(feelsLike))
+        return viewModel
+    }
+    
+    private func removeDecimal(number: Double) -> String {
+        let text = number.description
+        if let index = text.range(of: ".")?.lowerBound {
+            return String(text.prefix(upTo: index))
+        }
+        return text
     }
 }

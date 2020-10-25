@@ -18,6 +18,9 @@ protocol MainViewControllerDelegate: class {
     
     // Изменение координат центра карты
     func didChangeLocationCenterMapView(location: UserLocationCoordinateModel)
+    
+    // Переход к местоположению пользователя
+    func navigateToUserLocation()
 }
 
 class MainViewController: UIViewController {
@@ -102,7 +105,13 @@ extension MainViewController: MainDisplayLogic {
 }
 
 extension MainViewController: MainViewControllerDelegate {
+    // MARK: Изменение координат центра карты
     func didChangeLocationCenterMapView(location: UserLocationCoordinateModel) {
         fetchWeather(location: location)
+    }
+    
+    // MARK: Переход к местоположению пользователя
+    func navigateToUserLocation() {
+        getUserLocation()
     }
 }

@@ -3,5 +3,6 @@
 //
 
 /// Класс для хранения данных модуля Main
-class MainDataStore {
+struct WeatherDataStore {
+    static var weather: WeatherModel?
 }

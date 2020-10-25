@@ -18,12 +18,12 @@ protocol MainBusinessLogic {
 class MainInteractor: MainBusinessLogic {
 
     let presenter: MainPresentationLogic
-    let provider: MainProviderProtocol
-    var mapLocationService: MainMapLocationServiceProtocol
+    let provider: WeatherProviderProtocol
+    var mapLocationService: MapLocationServiceProtocol
 
     init(presenter: MainPresentationLogic,
-         provider: MainProviderProtocol = MainProvider(),
-         mapLocationService: MainMapLocationServiceProtocol = MainMapLocationService()) {
+         provider: WeatherProviderProtocol = WeatherProvider(),
+         mapLocationService: MapLocationServiceProtocol = MapLocationService()) {
         self.presenter = presenter
         self.provider = provider
         self.mapLocationService = mapLocationService
@@ -70,7 +70,7 @@ class MainInteractor: MainBusinessLogic {
     }
 }
 
-extension MainInteractor: MainMapLocationServiceDelegate {
+extension MainInteractor: MapLocationServiceDelegate {
     func didUpdateLocations(_ locations: [CLLocation]) {
         guard let location = locations.first else { return }
         let result: Main.MapLocationRequestResult

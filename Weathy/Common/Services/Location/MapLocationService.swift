@@ -1,5 +1,5 @@
 //
-//  MainMapLocationService.swift
+//  MapLocationService.swift
 //  Weathy
 //
 //  Created by Семен Семенов on 22.10.2020.
@@ -7,9 +7,9 @@
 
 import CoreLocation
 
-protocol MainMapLocationServiceProtocol {
+protocol MapLocationServiceProtocol {
     
-    var locationServiceDelegate: MainMapLocationServiceDelegate? { get set }
+    var locationServiceDelegate: MapLocationServiceDelegate? { get set }
     
     // Получение местоположения пользователя
     func getUserLocation() -> CLLocation?
@@ -24,14 +24,14 @@ protocol MainMapLocationServiceProtocol {
     func start()
 }
 
-protocol MainMapLocationServiceDelegate: class {
+protocol MapLocationServiceDelegate: class {
     
     func didUpdateLocations(_ locations: [CLLocation])
 }
 
-class MainMapLocationService: NSObject, MainMapLocationServiceProtocol {
+class MapLocationService: NSObject, MapLocationServiceProtocol {
     
-    weak var locationServiceDelegate: MainMapLocationServiceDelegate?
+    weak var locationServiceDelegate: MapLocationServiceDelegate?
     
     private let locationManager = CLLocationManager()
     
@@ -74,7 +74,7 @@ class MainMapLocationService: NSObject, MainMapLocationServiceProtocol {
     }
 }
 
-extension MainMapLocationService: CLLocationManagerDelegate {
+extension MapLocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationServiceDelegate?.didUpdateLocations(locations)
         print("Map service locations: \(locations)")

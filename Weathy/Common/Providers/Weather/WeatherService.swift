@@ -2,7 +2,7 @@
 //  Created by Semen Semenov on 21/10/2020.
 //
 
-protocol MainServiceProtocol {
+protocol WeatherServiceProtocol {
 
     // Запрос получения данных о погоде
     // https://openweathermap.org/current
@@ -10,7 +10,7 @@ protocol MainServiceProtocol {
 }
 
 /// Получает данные для модуля Main
-class MainService: MainServiceProtocol {
+class WeatherService: WeatherServiceProtocol {
     
     private let apiClient: APIClient
     

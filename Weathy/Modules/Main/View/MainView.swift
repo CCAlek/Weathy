@@ -23,6 +23,7 @@ class MainView: UIView {
     }
 
     private var mainViewMapViewDelegate: MainViewMapViewDelegate = MainViewMapViewDelegate()
+    weak var delegate: MainViewControllerDelegate?
 
     private var portraitConstraint: [NSLayoutConstraint]!
     private var landscapeConstraint: [NSLayoutConstraint]!
@@ -66,6 +67,7 @@ class MainView: UIView {
         button.setImage(R.image.mainHeart(), for: .normal)
         button.contentEdgeInsets = ViewMetrics.largeButtonContentInset
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(heartButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -77,7 +79,7 @@ class MainView: UIView {
         return stackView
     }()
     
-    private lazy var plusButton: UIButton = {
+    private lazy var zoomPlusButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = ViewMetrics.backgroundColor
         button.tintColor = R.color.gray()
@@ -89,10 +91,11 @@ class MainView: UIView {
         button.setImage(R.image.mainPlus(), for: .normal)
         button.contentEdgeInsets = ViewMetrics.buttonContentInset
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(zoomPlusButtonAction), for: .touchUpInside)
         return button
     }()
     
-    private lazy var minusButton: UIButton = {
+    private lazy var zoomMinusButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = ViewMetrics.backgroundColor
         button.tintColor = R.color.gray()
@@ -104,6 +107,7 @@ class MainView: UIView {
         button.setImage(R.image.mainMinus(), for: .normal)
         button.contentEdgeInsets = ViewMetrics.buttonContentInset
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(zoomMinusButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -119,6 +123,7 @@ class MainView: UIView {
         button.setImage(R.image.mainLocation(), for: .normal)
         button.contentEdgeInsets = ViewMetrics.largeButtonContentInset
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
         return button
     }()
 
@@ -131,6 +136,7 @@ class MainView: UIView {
         view.layer.shadowRadius = 12
         view.layer.shadowOffset = CGSize(width: 0, height: 4)
         view.backgroundColor = ViewMetrics.backgroundColor
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigateToWeather)))
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -185,6 +191,7 @@ class MainView: UIView {
 
     init(frame: CGRect = CGRect.zero,
          delegate: MainViewControllerDelegate) {
+        self.delegate = delegate
         mainViewMapViewDelegate.delegate = delegate
         super.init(frame: frame)
         portraitConstraint = setupPortraitConstraint()
@@ -212,7 +219,39 @@ class MainView: UIView {
         let region = self.mapView.regionThatFits(coordinateRegion)
         self.mapView.setRegion(region, animated: true)
     }
+}
+
+// MARK: Actions
+extension MainView {
+    @objc private func navigateToWeather() {
+        print(#function)
+    }
     
+    @objc private func heartButtonAction() {
+        print(#function)
+    }
+    
+    @objc private func zoomPlusButtonAction() {
+        var region: MKCoordinateRegion = mapView.region
+        region.span.latitudeDelta /= 2.0
+        region.span.longitudeDelta /= 2.0
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @objc private func zoomMinusButtonAction() {
+        var region: MKCoordinateRegion = mapView.region
+        region.span.latitudeDelta *= 2.0
+        region.span.longitudeDelta *= 2.0
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @objc private func locationButtonAction() {
+        delegate?.navigateToUserLocation()
+    }
+}
+
+// MARK: Setup layout
+extension MainView {
     func setupOrientationLayout() {
         switch UIWindow.orientation {
         case .landscapeLeft, .landscapeRight:
@@ -227,9 +266,7 @@ class MainView: UIView {
             NSLayoutConstraint.activate(portraitConstraint)
         }
     }
-}
-
-extension MainView {
+    
     private func setupLayout() {
         backgroundColor = ViewMetrics.backgroundColor
         mapView.backgroundColor = ViewMetrics.backgroundColor
@@ -240,8 +277,8 @@ extension MainView {
         addSubview(buttonStackView)
         addSubview(locationButton)
         addSubview(weatherView)
-        buttonStackView.addArrangedSubview(plusButton)
-        buttonStackView.addArrangedSubview(minusButton)
+        buttonStackView.addArrangedSubview(zoomPlusButton)
+        buttonStackView.addArrangedSubview(zoomMinusButton)
         weatherView.addSubview(titleLabel)
         weatherView.addSubview(temperatureLabel)
         weatherView.addSubview(iconImageView)

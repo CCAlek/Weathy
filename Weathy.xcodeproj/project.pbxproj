@@ -30,6 +30,7 @@
 		22A13A6B254072F600AE5D3F /* UniqueIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A13A6A254072F600AE5D3F /* UniqueIdentifiable.swift */; };
 		22A13A71254073D400AE5D3F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A13A70254073D400AE5D3F /* TabBarController.swift */; };
 		22A13A792540758700AE5D3F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22A13A782540758700AE5D3F /* Colors.xcassets */; };
+		22AE50CF25452C0B0077AB35 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AE50CE25452C0B0077AB35 /* Orientation.swift */; };
 		2327957AF9BA300761EFF008 /* MainBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6912241EF26F7D3450A6DF3 /* MainBuilder.swift */; };
 		24C159CF4DC0CBE5EE5F3F6A /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8265220D3BE559C9360D87E /* MainService.swift */; };
 		2A74C7421964F6B4B569D960 /* MainDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B998880BE5CCF70C48C4B1D8 /* MainDataStore.swift */; };
@@ -89,6 +90,7 @@
 		22A13A6A254072F600AE5D3F /* UniqueIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueIdentifiable.swift; sourceTree = "<group>"; };
 		22A13A70254073D400AE5D3F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		22A13A782540758700AE5D3F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		22AE50CE25452C0B0077AB35 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		63799CB28763131D2E66D9ED /* MainViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		79916B2B485C839E42DFECE9 /* MainInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		7A41BFF2B5E063E5226558D3 /* MainDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainDataFlow.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		22A13A5B254070A800AE5D3F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				22AE50CC25452BBF0077AB35 /* Extensions */,
 				229B74BB2541C2BD004379F4 /* Endpoints */,
 				229B74B42541BFE3004379F4 /* Services */,
 				22A13A5C254070C400AE5D3F /* Models */,
@@ -257,6 +260,22 @@
 				22A13A70254073D400AE5D3F /* TabBarController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		22AE50CC25452BBF0077AB35 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				22AE50CD25452BD00077AB35 /* UIWindow */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		22AE50CD25452BD00077AB35 /* UIWindow */ = {
+			isa = PBXGroup;
+			children = (
+				22AE50CE25452C0B0077AB35 /* Orientation.swift */,
+			);
+			path = UIWindow;
 			sourceTree = "<group>";
 		};
 		587954BCA410D27E464965B1 /* Main */ = {
@@ -550,6 +569,7 @@
 				22A13A6B254072F600AE5D3F /* UniqueIdentifiable.swift in Sources */,
 				2327957AF9BA300761EFF008 /* MainBuilder.swift in Sources */,
 				7DF04809CACE9459DE99F8AE /* MainViewController.swift in Sources */,
+				22AE50CF25452C0B0077AB35 /* Orientation.swift in Sources */,
 				49EEA5B3305B4F1E1A543BEF /* MainInteractor.swift in Sources */,
 				229B74BE2541C301004379F4 /* WeatherMapEndpoints.swift in Sources */,
 				229B74B02541ACD9004379F4 /* MainViewMapViewDelegate.swift in Sources */,

@@ -21,6 +21,9 @@ class MainView: UIView {
 
     private var mainViewMapViewDelegate: MainViewMapViewDelegate = MainViewMapViewDelegate()
 
+    private var portraitConstraint: [NSLayoutConstraint]!
+    private var landscapeConstraint: [NSLayoutConstraint]!
+    
     private let tilesOverlay: MKTileOverlay = {
         let overlay = MKTileOverlay()
         return overlay
@@ -93,7 +96,6 @@ class MainView: UIView {
         label.numberOfLines = 1
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         label.textColor = R.color.dark()
-        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -104,7 +106,6 @@ class MainView: UIView {
         label.numberOfLines = 1
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         label.textColor = R.color.dark()
-        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -113,6 +114,8 @@ class MainView: UIView {
          delegate: MainViewControllerDelegate) {
         mainViewMapViewDelegate.delegate = delegate
         super.init(frame: frame)
+        portraitConstraint = setupPortraitConstraint()
+        landscapeConstraint = setupLandscapeConstraint()
         setupLayout()
     }
 
@@ -129,8 +132,32 @@ class MainView: UIView {
             iconImageView.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
         }
     }
+    
+    func displayUserLocation(location: UserLocationCoordinateModel) {
+        let location = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        let coordinateRegion = MKCoordinateRegion(center: location, latitudinalMeters: 1500, longitudinalMeters: 1500)
+        let region = self.mapView.regionThatFits(coordinateRegion)
+        self.mapView.setRegion(region, animated: true)
+    }
+    
+    func setupOrientationLayout() {
+        switch UIWindow.orientation {
+        case .landscapeLeft, .landscapeRight:
+            descriptionLabel.textAlignment = .left
+            feelsLikeLabel.textAlignment = .left
+            NSLayoutConstraint.deactivate(portraitConstraint)
+            NSLayoutConstraint.activate(landscapeConstraint)
+        default:
+            descriptionLabel.textAlignment = .right
+            feelsLikeLabel.textAlignment = .right
+            NSLayoutConstraint.deactivate(landscapeConstraint)
+            NSLayoutConstraint.activate(portraitConstraint)
+        }
+    }
+}
 
-    func setupLayout() {
+extension MainView {
+    private func setupLayout() {
         backgroundColor = ViewMetrics.backgroundColor
         mapView.backgroundColor = ViewMetrics.backgroundColor
         
@@ -152,12 +179,9 @@ class MainView: UIView {
             arrowImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.arrowImageViewSize.width)
         ])
         
+        setupOrientationLayout()
+        
         NSLayoutConstraint.activate([
-            weatherView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ViewMetrics.standartMargin),
-            weatherView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
-            weatherView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
-            weatherView.heightAnchor.constraint(equalToConstant: 168),
-            
             titleLabel.topAnchor.constraint(equalTo: weatherView.topAnchor, constant: ViewMetrics.standartMargin),
             titleLabel.leadingAnchor.constraint(equalTo: weatherView.leadingAnchor, constant: ViewMetrics.standartMargin),
             titleLabel.trailingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: -ViewMetrics.spacing),
@@ -168,7 +192,17 @@ class MainView: UIView {
             iconImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             iconImageView.trailingAnchor.constraint(equalTo: weatherView.trailingAnchor, constant: -ViewMetrics.standartMargin),
             iconImageView.heightAnchor.constraint(equalToConstant: ViewMetrics.iconImageViewSize.height),
-            iconImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.iconImageViewSize.width),
+            iconImageView.widthAnchor.constraint(equalToConstant: ViewMetrics.iconImageViewSize.width)
+        ])
+    }
+    
+    private func setupPortraitConstraint() -> [NSLayoutConstraint] {
+        let constraints = [
+            weatherView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ViewMetrics.standartMargin),
+            weatherView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ViewMetrics.standartMargin),
+            weatherView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
+            
+            temperatureLabel.bottomAnchor.constraint(equalTo: weatherView.bottomAnchor, constant: -ViewMetrics.standartMargin),
             
             descriptionLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: ViewMetrics.spacing),
             descriptionLabel.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor, constant: ViewMetrics.spacing),
@@ -177,13 +211,26 @@ class MainView: UIView {
             feelsLikeLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: ViewMetrics.spacing),
             feelsLikeLabel.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor, constant: ViewMetrics.spacing),
             feelsLikeLabel.trailingAnchor.constraint(equalTo: weatherView.trailingAnchor, constant: -ViewMetrics.standartMargin)
-        ])
+        ]
+        return constraints
     }
-    
-    func displayUserLocation(location: UserLocationCoordinateModel) {
-        let location = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-        let coordinateRegion = MKCoordinateRegion(center: location, latitudinalMeters: 1500, longitudinalMeters: 1500)
-        let region = self.mapView.regionThatFits(coordinateRegion)
-        self.mapView.setRegion(region, animated: true)
+
+    private func setupLandscapeConstraint() -> [NSLayoutConstraint] {
+        let constraints = [
+            weatherView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ViewMetrics.standartMargin),
+            weatherView.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -ViewMetrics.standartMargin),
+            weatherView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -ViewMetrics.standartMargin),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: ViewMetrics.spacing),
+            descriptionLabel.leadingAnchor.constraint(equalTo: weatherView.leadingAnchor, constant: ViewMetrics.standartMargin),
+            descriptionLabel.trailingAnchor.constraint(equalTo: weatherView.trailingAnchor, constant: -ViewMetrics.standartMargin),
+
+            feelsLikeLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: ViewMetrics.spacing),
+            feelsLikeLabel.leadingAnchor.constraint(equalTo: weatherView.leadingAnchor, constant: ViewMetrics.standartMargin),
+            feelsLikeLabel.trailingAnchor.constraint(equalTo: weatherView.trailingAnchor, constant: -ViewMetrics.standartMargin),
+            feelsLikeLabel.bottomAnchor.constraint(equalTo: weatherView.bottomAnchor, constant: -ViewMetrics.standartMargin),
+            
+        ]
+        return constraints
     }
 }

@@ -48,6 +48,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         display(newMapViewState: mapViewState)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        customView?.setupOrientationLayout()
+    }
 
     // MARK: Получение местоположения пользователя
     func getUserLocation() {

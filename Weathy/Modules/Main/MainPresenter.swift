@@ -65,7 +65,7 @@ class MainPresenter: MainPresentationLogic {
 
 extension MainPresenter {
     // MARK: Получение модели отображения данных о погоде
-    private func getWeatherViewModel(weather: WeatherModel) -> MainViewModel {
+    private func getWeatherViewModel(weather: WeatherModel) -> WeatherViewModel {
         var iconURL: String
         if let icon = weather.weather.first?.icon {
             iconURL = "\(WeatherMapEndpoints.icon)/\(icon)@2x.png"
@@ -77,7 +77,7 @@ extension MainPresenter {
         let temperature = removeDecimal(number: weather.main.temperature)
         let feelsLike = removeDecimal(number: weather.main.feelsLike)
         
-        let viewModel = MainViewModel(
+        let viewModel = WeatherViewModel(
             title: R.string.localizable.mainTitleViewModel(title),
             temperature: R.string.localizable.mainTemperature(temperature),
             iconURL: iconURL,
@@ -95,10 +95,26 @@ extension MainPresenter {
     }
     
     // MARK: Получение модели отображения подробной информации о погоде
-    private func getWeatherScreenViewModel(weather: WeatherModel) -> WeatherViewModel {
-        let viewModel = WeatherViewModel(rows: [
-            .title(getWeatherViewModel(weather: weather))
+    private func getWeatherScreenViewModel(weather: WeatherModel) -> WeatherTableViewModel {
+        let viewModel = WeatherTableViewModel(rows: [
+            .title(getWeatherViewModel(weather: weather)),
+            .information(getInformationViewModels(weather: weather))
         ])
         return viewModel
+    }
+    
+    private func getInformationViewModels(weather: WeatherModel) -> [WeatherInformationViewModel] {
+        let viewModels: [WeatherInformationViewModel] = [
+            WeatherInformationViewModel(
+                title: R.string.localizable.mainWindTitle(),
+                description: R.string.localizable.mainWindDescription(weather.wind.speed.description)),
+            WeatherInformationViewModel(
+                title: R.string.localizable.mainPressureTitle(),
+                description: R.string.localizable.mainPressureDescription(weather.main.pressure.description)),
+            WeatherInformationViewModel(
+                title: R.string.localizable.mainHumidityTitle(),
+                description: "\(weather.main.humidity)%")
+        ]
+        return viewModels
     }
 }

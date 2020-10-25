@@ -22,6 +22,11 @@
 "main.title-view-model" = "%@ / Сейчас";
 "main.temperature" = "%@ Cº";
 "main.feelsLike" = "Ощущается как: %@";
+"main.wind-title" = "ВЕТЕР";
+"main.wind-description" = "%@ м/с";
+"main.pressure-title" = "ДАВЛЕНИЕ";
+"main.pressure-description" = "%@ гПа";
+"main.humidity-title" = "ВЛАЖНОСТЬ";
 
 // MARK: Places
 "places.title" = "Места";

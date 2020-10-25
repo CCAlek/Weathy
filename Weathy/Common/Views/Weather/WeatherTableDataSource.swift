@@ -9,9 +9,9 @@ import UIKit
 
 class WeatherTableDataSource: NSObject, UITableViewDataSource {
 
-    var representableViewModel: WeatherViewModel
+    var representableViewModel: WeatherTableViewModel
 
-    init(viewModel: WeatherViewModel = WeatherViewModel()) {
+    init(viewModel: WeatherTableViewModel = WeatherTableViewModel()) {
         self.representableViewModel = viewModel
     }
 
@@ -32,8 +32,10 @@ extension WeatherTableDataSource {
             let cell = tableView.dequeueReusableCellWithRegistration(type: WeatherTitleCell.self, indexPath: indexPath)
             cell.configure(with: viewModel)
             return cell
-        case .information:
-            return UITableViewCell()
+        case let .information(viewModel):
+            let cell = tableView.dequeueReusableCellWithRegistration(type: WeatherInformationCell.self, indexPath: indexPath)
+            cell.configure(with: viewModel)
+            return cell
         }
     }
 }

@@ -50,7 +50,7 @@ enum Main {
     }
     
     enum WeatherState {
-        case result(MainViewModel)
+        case result(WeatherViewModel)
         case failure(String)
     }
     
@@ -64,7 +64,7 @@ enum Main {
         }
         
         struct ViewModel {
-            let result: WeatherViewModel
+            let result: WeatherTableViewModel
         }
     }
 }

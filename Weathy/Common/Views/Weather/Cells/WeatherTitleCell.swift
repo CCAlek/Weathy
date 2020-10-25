@@ -93,7 +93,7 @@ class WeatherTitleCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with viewModel: MainViewModel) {
+    func configure(with viewModel: WeatherViewModel) {
         titleLabel.text = viewModel.title
         temperatureLabel.text = viewModel.temperature
         descriptionLabel.text = viewModel.description
